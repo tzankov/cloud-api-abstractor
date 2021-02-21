@@ -6,7 +6,7 @@ This API abstracts the Cloud APIs for AWS and Azure, by utilising Flask. The end
 
 # Running
 ```bash
-python3 app/api.py -fp {PARAMETER_FILE_PATH}
+python3 app/api.py
 ```
 
 # Testing
