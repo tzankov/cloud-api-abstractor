@@ -1,35 +1,38 @@
 from flask import Flask, jsonify, request, make_response
+from flask_restful import Resource, Api
 from config import SitConfig
 from aws import * 
 
 application = Flask(__name__)
 application.config.from_object(SitConfig())
+api = Api(application)
 
 
-@application.route('/api/v1/actions', methods=['GET'])
-def api_all():
-    available_actions = []
-    for k,v in actions.items():
-        available_actions.append(k)
-    return jsonify(available_actions)
+class Actions(Resource):
+    def __init__(self):
+        self.available_actions = {
+                            "create": "VPC",
+                            "create": "VNET",
+                            "peer": "VNET/VPC"
+                            }
 
 
-@application.errorhandler(404)
-def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    def get(self):
+        return jsonify(self.available_actions)
+        
 
-
-@application.route("/api/v1/create", methods=["POST"])
-def create_resource():
-    if request.method=='POST':
+    def post(self):
         posted_action = request.get_json()
         action = posted_action['action']
-        data = posted_action['data']
-        if action in actions:
-            eval(actions[action])
-            return jsonify(str("Executing action: " + str(action)))
+        resource_type = posted_action['resource_type']
+        if action in self.available_actions:
+            ResourceFactory.build_resource(action, resource_type)
+            return jsonify(str("Executing action: " + str(action) + str(resource_type)))
         else:
             return jsonify({'error': 'Action NOT FOUND'})
+
+
+api.add_resource(Actions, '/api/v1/actions')
 
 
 if __name__=='__main__':
