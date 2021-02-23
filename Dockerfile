@@ -1,9 +1,6 @@
-FROM ubuntu:20.04
-RUN apt-get update -y && apt-get install -y python3-pip python3-dev
-COPY ./requirements.txt /app/requirements.txt
+FROM python:3.8
+ADD ./flask_app /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-COPY . /app
 EXPOSE 8080
-ENTRYPOINT [ "python3" ]
-CMD [ "app/api.py" ]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app"]

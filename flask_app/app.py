@@ -2,11 +2,11 @@ from flask import Flask, jsonify, request, make_response
 from config import SitConfig
 from aws import * 
 
-app = Flask(__name__)
-app.config.from_object(SitConfig())
+application = Flask(__name__)
+application.config.from_object(SitConfig())
 
 
-@app.route('/api/v1/actions', methods=['GET'])
+@application.route('/api/v1/actions', methods=['GET'])
 def api_all():
     available_actions = []
     for k,v in actions.items():
@@ -14,12 +14,12 @@ def api_all():
     return jsonify(available_actions)
 
 
-@app.errorhandler(404)
+@application.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
-@app.route("/api/v1/create", methods=["POST"])
+@application.route("/api/v1/create", methods=["POST"])
 def create_resource():
     if request.method=='POST':
         posted_action = request.get_json()
@@ -33,6 +33,4 @@ def create_resource():
 
 
 if __name__=='__main__':
-    app.run(host=app.config['FLASK_RUN_HOST'], 
-            port=app.config['FLASK_RUN_PORT'],
-            )
+    application.run()

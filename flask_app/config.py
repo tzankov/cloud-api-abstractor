@@ -1,8 +1,6 @@
 class Config(object):
     DEBUG = True
     TESTING = True
-    FLASK_RUN_HOST = "0.0.0.0"
-    FLASK_RUN_PORT = 8080
 
 
 class ProductionConfig(Config):
