@@ -1,6 +1,6 @@
 # cloud-api-abstractor
 
-This API abstracts the Cloud APIs for AWS and Azure, by utilising Flask. The end goal is to be able to create resources on both clouds and be able to modify them, ie update sizing and security groups.
+This API abstracts the Cloud APIs for AWS and Azure, by utilising Flask. The end goal is to be able to create resources on both clouds via a single interface and be able to modify them, ie create vms, update sizing and modify security groups.
 
 ## Running & Testing the cloud-api-abstractor
 

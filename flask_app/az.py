@@ -7,7 +7,7 @@ class AzureResource(IResource):
 	def create(self):
 		print("azure create")
 
-	def update():
+	def update(self):
 		print("azure update")
 
 	def secure(self):

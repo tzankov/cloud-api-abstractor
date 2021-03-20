@@ -13,7 +13,7 @@ class ResourceFactory:
 			elif action == "secure":
 				return aws.secure()
 		if resource_type == "vm":
-			az = AzureResource(action)
+			az = AzureResource()
 			if action == "create":
 				return az.create()
 			elif action == "update":

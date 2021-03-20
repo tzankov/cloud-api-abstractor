@@ -27,11 +27,16 @@ class Actions(Resource):
         posted_action = request.get_json()
         action = posted_action["action"]
         resource_type = posted_action["resource_type"]
-        print(action)
-        print(resource_type)
+        
         if action in self.available_actions:
-            ResourceFactory.build_resource(action, resource_type)
-            return jsonify(str("Executing action: " + str(action) + " " + str(resource_type)))
+            print(action)
+            if resource_type in self.available_actions[action]:
+                print(resource_type)
+                ResourceFactory.build_resource(action, resource_type)
+                return jsonify(str("Executing action: " + str(action) + " " + str(resource_type)))
+            else:
+                return jsonify({"error": "Resource Type NOT FOUND"})
+
         else:
             return jsonify({"error": "Action NOT FOUND"})
 
